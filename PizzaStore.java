@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.Arrays;
 
+// Class for Pizza with pizza properties
 class Pizza{
     public int size;
     public String crust;
@@ -12,8 +13,10 @@ class Pizza{
     }
 }
 
+// Pizza Store
 public class PizzaStore {
 
+    // Menu of App
     public static void menu() {
         System.out.println("\n");
         System.out.println("Choose Your Option:");
@@ -23,6 +26,7 @@ public class PizzaStore {
         System.out.println("\n");
     }
 
+    // Adding Pizza 
     public static Pizza[] addPizza(Pizza[] pizzas){
         int n = pizzas.length;
         Scanner sc = new Scanner(System.in);  
@@ -49,6 +53,7 @@ public class PizzaStore {
         return newPizzas;
     }
 
+    // show order 
     public static void showOrder(Pizza[] pizzas){
         System.out.println("\n ");
         System.out.println("S.no  Size  Crust  Toppings");
@@ -61,7 +66,7 @@ public class PizzaStore {
     public static void main(String[] args) {
         
         Scanner sc = new Scanner(System.in);  
-        Pizza[] arr = new Pizza[0];
+        Pizza[] arr = new Pizza[0]; // array of the order
         boolean b = true;
         menu();
 
