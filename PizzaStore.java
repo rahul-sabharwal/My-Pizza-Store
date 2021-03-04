@@ -38,12 +38,13 @@ public class PizzaStore {
 
         System.out.println("\n");
         System.out.println("Pizza Size");
-        int size = sc.nextInt();
+        int size = Integer.parseInt(sc.nextLine());
 
         System.out.println("\n");
         System.out.println("Toppings");
         String toppings = new String();
-        toppings = sc.next();
+        System.out.println("\n");
+        toppings = sc.nextLine();
 
     
 
@@ -72,6 +73,7 @@ public class PizzaStore {
 
         while(b){
             int opt = sc.nextInt();
+            
             switch (opt) {
                 case 1:
                     arr = addPizza(arr);
