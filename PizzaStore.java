@@ -16,6 +16,22 @@ class Pizza{
 // Pizza Store
 public class PizzaStore {
 
+    public static void PizzaSizeMenu() {
+        System.out.println("\n");
+        System.out.println("Choose Your Option for crust size:");
+        System.out.println("1. 7\"");
+        System.out.println("2. 10\"");
+        System.out.println("3. 16\"");
+    }
+
+    public static void PizzaCrustMenu() {
+        System.out.println("\n");
+        System.out.println("Choose Your Option for crust:");
+        System.out.println("1. Thin");
+        System.out.println("2. Thick");
+        System.out.println("3. Exit");
+    }
+
     // Menu of App
     public static void menu() {
         System.out.println("\n");
@@ -32,16 +48,46 @@ public class PizzaStore {
         Scanner sc = new Scanner(System.in);  
         Pizza[] newPizzas = Arrays.copyOf(pizzas,pizzas.length+1);
 
-        System.out.println("Pizza Crust");
-        String crust = new String();
-        crust = sc.nextLine();
+        PizzaCrustMenu();
+        int copt = Integer.parseInt(sc.nextLine());
+        String crust="";
+        switch (copt) {
+            case 1:
+                crust="Thin";
+                break;
+
+            case 2:
+                crust="Thick";
+                break;
+
+            default:
+                crust="Thick";
+                break;
+        }
 
         System.out.println("\n");
-        System.out.println("Pizza Size");
-        int size = Integer.parseInt(sc.nextLine());
+        PizzaSizeMenu();
+        int sopt = Integer.parseInt(sc.nextLine());
+        int size=7;
+        switch (sopt) {
+            case 1:
+                size=7;
+                break;
+            
+            case 2:
+                size=10;
+                break;
+            case 3:
+                size=16;
+                break;
+            default:
+                crust="Thick";
+                break;
+        }
 
         System.out.println("\n");
-        System.out.println("Toppings");
+
+        System.out.println("Choose additional Toppings Mushrooms/Cottage/Pineapple/Arugla");
         String toppings = new String();
         System.out.println("\n");
         toppings = sc.nextLine();
