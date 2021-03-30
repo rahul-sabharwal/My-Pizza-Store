@@ -102,7 +102,6 @@ public class PizzaStore {
 
         newPizzas[n] = new Pizza(size, crust, toppings);
 
-        menu();
         return newPizzas;
     }
 
@@ -130,11 +129,16 @@ public class PizzaStore {
             case 2: PizzaCrustMenu();
             opt = Integer.parseInt(sc.nextLine());
             pizzas[pos-1].crust = getCrust(opt);
+            break;
             case 3:System.out.println("Choose additional Toppings Mushrooms/Cottage/Pineapple/Arugla");
             String tops = new String();
+            
             pizzas[pos-1].Toppings = tops;
+            break;
+            default: System.out.println("Enter a valid option.");
+            editPizza(pizzas);
         }
-        menu();
+        
     }
 
     // Print order 
@@ -144,7 +148,6 @@ public class PizzaStore {
         for(int i=0;i<pizzas.length;i++){
             System.out.println((i+1)+"      "+pizzas[i].size+"   "+pizzas[i].crust+"   "+pizzas[i].Toppings);
         }
-        menu();
     }
 
     
@@ -163,12 +166,15 @@ public class PizzaStore {
             switch (opt) {
                 case 1:
                     arr = addPizza(arr);
+                    menu();
                     break;
                 case 2:
                     showOrder(arr);
+                    menu();
                     break;
                 case 3:
                     editPizza(arr);
+                    menu();
                     break;
                 default:b=false;
                     break;
