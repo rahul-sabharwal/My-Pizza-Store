@@ -1,29 +1,59 @@
 package Store;
 import java.util.Scanner;
-
 import PizzaModal.Pizza;
-
 import java.util.Arrays;
 
 
 public class PizzaStore {
 
+    
+    // Main menu of App
+    public  void StoreMenu() {
+        System.out.println("\n");
+        System.out.println("        ########################################");
+        System.out.println("        #                                      #");
+        System.out.println("        #         Choose Your Option:          #");
+        System.out.println("        #                                      #");
+        System.out.println("        #           1. Add a Pizza             #");
+        System.out.println("        #         2. Show your Order           #");
+        System.out.println("        #         3. Edit your Order           #");
+        System.out.println("        #              4. Exit                 #");
+        System.out.println("        #                                      #");
+        System.out.println("        ########################################");
+
+        System.out.println("\n");
+    }
+
     // Pizza size menu
     public  void PizzaSizeMenu() {
         System.out.println("\n");
-        System.out.println("Choose Your Option for crust size:");
-        System.out.println("1. 7\"");
-        System.out.println("2. 10\"");
-        System.out.println("3. 16\"");
+        System.out.println("        ########################################");
+        System.out.println("        #                                      #");
+        System.out.println("        #         Choose Your Option:          #");
+        System.out.println("        #                                      #");
+        System.out.println("        #             1. 7 inches              #");
+        System.out.println("        #             2. 10 inches             #");
+        System.out.println("        #             3. 16 inches             #");
+        System.out.println("        #                                      #");
+        System.out.println("        ########################################");
+
+        System.out.println("\n");
     }
 
     // Pizza Crust Menu
     public  void PizzaCrustMenu() {
         System.out.println("\n");
-        System.out.println("Choose Your Option for crust:");
-        System.out.println("1. Thin");
-        System.out.println("2. Thick");
-        System.out.println("3. Exit");
+        System.out.println("        ########################################");
+        System.out.println("        #                                      #");
+        System.out.println("        #         Choose Your Option:          #");
+        System.out.println("        #                                      #");
+        System.out.println("        #             1. Thin Crust            #");
+        System.out.println("        #           2. Regular Crust           #");
+        System.out.println("        #                                      #");
+        System.out.println("        ########################################");
+
+        System.out.println("\n");
+        
     }
 
     // get size of yout pizza
@@ -55,16 +85,6 @@ public class PizzaStore {
     }
 
 
-    // Main menu of App
-    public  void StoreMenu() {
-        System.out.println("\n");
-        System.out.println("Choose Your Option:");
-        System.out.println("1. Add a Pizza");
-        System.out.println("2. Show your Order");
-        System.out.println("3. Edit your Order");
-        System.out.println("4. Exit");
-        System.out.println("\n");
-    }
 
     // Adding Pizza 
     public  Pizza[] addPizza(Pizza[] pizzas){
@@ -90,8 +110,7 @@ public class PizzaStore {
         System.out.println("\n");
         toppings = sc.nextLine();
 
-        sc.close();
-
+ 
 
         newPizzas[n] = new Pizza(size, crust, toppings);
 
@@ -107,10 +126,18 @@ public class PizzaStore {
         Scanner sc = new Scanner(System.in);  
         int pos = Integer.parseInt(sc.nextLine());
         System.out.println((pos-1)+"      "+pizzas[pos-1].size+"   "+pizzas[pos-1].crust+"   "+pizzas[pos-1].Toppings);
-        System.out.println("What You want to edit ?");
-        System.out.println("1. Size");
-        System.out.println("2. Crust");
-        System.out.println("3. Toppings");
+        System.out.println("\n");
+        System.out.println("        ########################################");
+        System.out.println("        #                                      #");
+        System.out.println("        #            What to Edit :            #");
+        System.out.println("        #                                      #");
+        System.out.println("        #             1. Size                  #");
+        System.out.println("        #             2. Crust                 #");
+        System.out.println("        #             3. Toppings              #");
+        System.out.println("        #                                      #");
+        System.out.println("        ########################################");
+
+        System.out.println("\n");
 
         int eopt = Integer.parseInt(sc.nextLine());
         int opt;
@@ -129,9 +156,9 @@ public class PizzaStore {
             pizzas[pos-1].Toppings = tops;
             break;
             default: System.out.println("Enter a valid option.");
-            editPizza(pizzas);
+            editPizza(pizzas); 
         }
-        sc.close();
+
 
         
     }

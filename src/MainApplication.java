@@ -13,6 +13,7 @@ public class MainApplication {
       store.StoreMenu();
 
       while(b){
+
           int opt = sc.nextInt();
           
           switch (opt) {
@@ -33,6 +34,6 @@ public class MainApplication {
           }
       }
       
-      sc.close();
+
   }
 }
