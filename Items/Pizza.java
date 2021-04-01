@@ -4,12 +4,13 @@ import java.util.Scanner;
 import Enums.*;
 
 public class Pizza extends Item{
+
   public Pizza(){
     super(ItemType.Pizza);
   }
 
   // Pizza size menu
-  public  void PizzaSizeMenu() {
+  public  void pizzaSizeMenu() {
     System.out.println("\n");
     System.out.println("        ########################################");
     System.out.println("        #                                      #");
@@ -26,7 +27,7 @@ public class Pizza extends Item{
   }
 
   // Pizza Crust Menu
-  public  void PizzaCrustMenu() {
+  public  void pizzaCrustMenu() {
     System.out.println("\n");
     System.out.println("        ########################################");
     System.out.println("        #                                      #");
@@ -42,7 +43,7 @@ public class Pizza extends Item{
   }
 
     // Pizza size menu
-    public  void PizzaToppingsMenu() {
+    public  void pizzaToppingsMenu() {
       System.out.println("\n");
       System.out.println("        ########################################");
       System.out.println("        #                                      #");
@@ -59,7 +60,7 @@ public class Pizza extends Item{
     }
   
 
-    public void EditMenu() {
+    public void editMenu() {
       System.out.println("\n");
       System.out.println("        ########################################");
       System.out.println("        #                                      #");
@@ -76,14 +77,14 @@ public class Pizza extends Item{
   }
 
   public void inputProperties(){
-    PizzaCrustMenu();
+    pizzaCrustMenu();
     Scanner scanner = new Scanner(System.in);
     String val = scanner.nextLine();
     addProperty(ItemPropertyType.CRUST, val);
-    PizzaSizeMenu();
+    pizzaSizeMenu();
     val = scanner.nextLine();
     addProperty(ItemPropertyType.SIZE, val);
-    PizzaToppingsMenu();
+    pizzaToppingsMenu();
     val = scanner.nextLine();
     addProperty(ItemPropertyType.TOPPINGS, val);
   };

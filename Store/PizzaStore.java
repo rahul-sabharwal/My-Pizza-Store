@@ -3,13 +3,14 @@ import java.util.Scanner;
 import java.util.Arrays;
 import Enums.*;
 import Items.*;
-import Items.Pizza;
 
 
 public class PizzaStore {
-    Item[] items = new Item[0];
 
-    public static void MainMenu() {
+    Item[] items = new Item[0];
+    String orderNote = "";
+
+    public static void mainMenu() {
         System.out.println("\n");
         System.out.println("        ########################################");
         System.out.println("        #                                      #");
@@ -19,20 +20,34 @@ public class PizzaStore {
         System.out.println("        #         2. Show your Order           #");
         System.out.println("        #         3. Edit your Order           #");
         System.out.println("        #        4. Confirm your order         #");
-        System.out.println("        #               5. Exit                #");
+        System.out.println("        #            5. Add a Note             #");
+        System.out.println("        #               6. Exit                #");
         System.out.println("        #                                      #");
         System.out.println("        ########################################");
         System.out.println("\n");
     }
 
 
-    public void addPizza(){
+    public void pushToItems(Item newItem){
         int len = items.length;
         Item[] newItems = Arrays.copyOf(items, items.length+1);
-        Item newItem = new Pizza();
-        newItem.inputProperties();
         newItems[len] = newItem;
         items = newItems;
+    }
+
+    public void addPizza(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n\t\tEnter 1 to CONTINUE and 0 to CANCEL\n");
+        int confirm = sc.nextInt();
+        if(confirm ==1){
+            Pizza newItem = new Pizza();
+            newItem.inputProperties();
+            pushToItems(newItem);
+        }
+        else{
+            System.out.println("\n\t\tX   Adding Pizza Cancelled   X\n");
+        }
+       
     }
 
     public void printOrder(){
@@ -43,13 +58,16 @@ public class PizzaStore {
 			items[i].printDetails();
 		}
     }
-    public void edit(){
+
+    public void editItem(){
         printOrder();
         System.out.println("\nEnter Item you want to edit : ");
         Scanner sc = new Scanner(System.in);
         int pos = sc.nextInt();
         Item pizza = items[pos-1];
-        pizza.EditMenu();
+
+        ((Pizza) pizza).editMenu();
+
         int prop = sc.nextInt();
         if(prop == 1){
             System.out.println("\nEnter New Size : ");
@@ -79,46 +97,60 @@ public class PizzaStore {
         System.out.println("#                                                                            #");
         System.out.println("##############################################################################");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter 1 to CONFIRM and 0 to ADD MORE");
+        if(orderNote.equals("")){
+            System.out.println("\n\t\tYou can also add a note for your order\n");
+        }else
+        System.out.println("\n\t\tNote : "+orderNote+"\n");
+        System.out.println("\n\t\tEnter 1 to CONFIRM and 0 to ADD MORE\n");
         int op = sc.nextInt();
         return op;
     }
 
 
+    public void addNote(){
+        System.out.println("\n\t\tType a note if you want to add :");
+        Scanner sc =  new Scanner(System.in);
+        String note = sc.nextLine();
+        orderNote = note;
+    }
 
 
     public void processInput() {
 		Scanner sc = new Scanner(System.in);
-		MainMenu();
+		mainMenu();
         while(true){
             int opt = sc.nextInt();
             if (opt == 1) {
             	addPizza();
                 System.out.println("\n");
-                MainMenu();
+                mainMenu();
 
             } else if (opt == 2) {
             	printOrder();
                 System.out.println("\n");
-                MainMenu();
+                mainMenu();
             } else if (opt == 3) {
-            	edit();
+            	editItem();
                 System.out.println("\n");
-                MainMenu();
+                mainMenu();
             } else if (opt == 4) {
             	int con = confirm();
                 if(con == 1){
-                    System.out.println("%    THANK YOU FOR ORDERING    %");
+                    System.out.println("\n\t\t%    THANK YOU FOR ORDERING    %\n");
                     break;
                 }else{
-                    MainMenu();
+                    mainMenu();
                 }
-            } else if(opt == 5) {
-                System.out.println("\n%    THANK YOU FOR VISITING YOUR ORDER IS ARRIVING SOON   %");
+            }
+            else if(opt == 5) {
+                addNote();
+                mainMenu();
+            } else if(opt == 6) {
+                System.out.println("\n\t\t%    THANK YOU FOR VISITING YOUR ORDER IS ARRIVING SOON   %\n");
             	break;
             }else{
-                System.out.println("X    INVALID INPUT PLEASE TRY AGAIN    X");
-            	MainMenu();
+                System.out.println("\n\t\tX    INVALID INPUT PLEASE TRY AGAIN    X\n");
+            	mainMenu();
             }
         }
 	}
