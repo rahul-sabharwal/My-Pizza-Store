@@ -16,9 +16,18 @@ public abstract class Item {
     return this.itemType.name();
   }
 
+  public int getLength(){
+    return properties.length;
+  }
+
   public void printDetails() {
 		for (ItemProperty prop : this.properties) {
-			System.out.print(prop.getValue()+"\t\t");
+      if (prop.getName() == ItemPropertyType.SDQUANTITY) {
+        System.out.println(prop.getIntValue()+"\t\t");
+      }else{
+        System.out.print(prop.getValue()+"\t\t");
+
+      }
 		}		
     System.out.print("\n");
 	}
@@ -31,6 +40,15 @@ public abstract class Item {
     }
   }
 
+  public void updateProperty(ItemPropertyType property, int val){
+    for(int i=0;i<this.properties.length;i++){
+      if(property.equals(this.properties[i].getName())){
+        this.properties[i].setValue(val);
+      }
+    }
+  }
+
+
   // add a property
   public void addProperty(ItemPropertyType property , String val){
     ItemProperty[] temp = this.properties;
@@ -42,7 +60,19 @@ public abstract class Item {
     this.properties[len] = new ItemProperty(property, val);
   }
 
-  public void EditMenu() {
+
+  public void addProperty(ItemPropertyType property , int val){
+    ItemProperty[] temp = this.properties;
+    int len = temp.length;
+    this.properties = new ItemProperty[len+1];
+    for(int i=0; i<len; i++){
+      this.properties[i] = temp[i];
+    }
+    this.properties[len] = new ItemProperty(property, val);
   }
 
+  public void deleteProperty(){
+    ItemProperty[] temp = new ItemProperty[0];
+    properties = temp;
+  }
 }

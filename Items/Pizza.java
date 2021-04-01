@@ -6,11 +6,11 @@ import Enums.*;
 public class Pizza extends Item{
 
   public Pizza(){
-    super(ItemType.Pizza);
+    super(ItemType.PIZZA);
   }
 
   // Pizza size menu
-  public  void pizzaSizeMenu() {
+  private  void pizzaSizeMenu() {
     System.out.println("\n");
     System.out.println("        ########################################");
     System.out.println("        #                                      #");
@@ -27,7 +27,7 @@ public class Pizza extends Item{
   }
 
   // Pizza Crust Menu
-  public  void pizzaCrustMenu() {
+  private  void pizzaCrustMenu() {
     System.out.println("\n");
     System.out.println("        ########################################");
     System.out.println("        #                                      #");
@@ -43,7 +43,7 @@ public class Pizza extends Item{
   }
 
     // Pizza size menu
-    public  void pizzaToppingsMenu() {
+    private  void pizzaToppingsMenu() {
       System.out.println("\n");
       System.out.println("        ########################################");
       System.out.println("        #                                      #");
