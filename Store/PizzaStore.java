@@ -8,11 +8,11 @@ import Items.*;
 
 public class PizzaStore {
 
-    Item[] items = new Item[0];
+    Item[] pizzas = new Item[0];
     String orderNote = "";
-
     ArrayList<Item> sideDishes = new ArrayList<>();
 
+    // Main Menu of Pizza Store
     public static void mainMenu() {
         System.out.println("\n");
         System.out.println("        ########################################");
@@ -40,17 +40,31 @@ public class PizzaStore {
     }
 
 
-    public void pushToItems(Item newItem){
-        int len = items.length;
-        Item[] newItems = Arrays.copyOf(items, items.length+1);
+    // PIZZAS FUNCTIONS
+
+    // push pizza to the end of pizza array
+    public void pushToPizzas(Item newItem){
+        int len = pizzas.length;
+        Item[] newItems = Arrays.copyOf(pizzas, pizzas.length+1);
         newItems[len] = newItem;
-        items = newItems;
+        pizzas = newItems;
     }
 
-    public void pushToSideDishes(SideDish newSideDish){
-        sideDishes.add(newSideDish);
+    // print all pizzas in order
+    public void printPizzas(){
+        if(pizzas.length > 0){
+            System.out.println("\t\t\t \n\nYour Pizzas\n");
+            System.out.println("\tS.no\tSize\t\tCrust\t\tToppings");
+            for (int i = 0; i < pizzas.length; i++) {
+                System.out.print("\t"+(i+1)+"\t");
+                pizzas[i].printDetails();
+            }
+        }else{
+            System.out.println("No Pizzas in your Order");
+        }
     }
 
+    // add new pizza to order
     public void addPizza(){
         Scanner sc = new Scanner(System.in);
         System.out.println("\n\t\tEnter 1 to CONTINUE and 0 to CANCEL\n");
@@ -58,7 +72,7 @@ public class PizzaStore {
         if(confirm ==1){
             Pizza newItem = new Pizza();
             newItem.inputProperties();
-            pushToItems(newItem);
+            pushToPizzas(newItem);
         }
         else{
             System.out.println("\n\t\tX   Adding Pizza Cancelled   X\n");
@@ -66,66 +80,14 @@ public class PizzaStore {
        
     }
 
-    public void addSideDish(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("\n\t\tEnter 1 to CONTINUE and 0 to CANCEL\n");
-        int confirm = sc.nextInt();
-        if(confirm ==1){
-            SideDish newSideDish = new SideDish();
-            newSideDish.inputProperties();
-            if(newSideDish.getLength() == 0){
-                return;
-            }
-            pushToSideDishes(newSideDish);
-        }
-        else{
-            System.out.println("\n\t\tX   Adding Side-Dish Cancelled   X\n");
-        }
-    }
-
-    public void printPizzas(){
-        if(items.length > 0){
-            System.out.println("\t\t\t \n\nYour Pizzas\n");
-            System.out.println("\tS.no\tSize\t\tCrust\t\tToppings");
-            for (int i = 0; i < items.length; i++) {
-                System.out.print("\t"+(i+1)+"\t");
-                items[i].printDetails();
-            }
-        }else{
-            System.out.println("No Pizzas in your Order");
-        }
-    }
-
-    public void printSideDishes(){
-        if(sideDishes.size()>0){
-            System.out.println("\t\t\t Your SideDishes\n");
-            int sernum =1;
-            System.out.println("\tS.no\tSideDish\tQuantity");
-            for(Item i : sideDishes){
-                System.out.print("\t"+(sernum)+"\t");
-			    i.printDetails();
-                sernum++;
-            }
-        } else {
-            System.out.println("No SideDishes in your Order");
-
-        }
-    }
-
-    public void printOrder(){
-        System.out.println("\t\t\t Your Order\n");
-        
-        printPizzas();
-        printSideDishes();
-
-    }
-
+    
+    // edit a pizza in order
     public void editPizza(){
         printPizzas();
         System.out.println("\nEnter Item you want to edit : ");
         Scanner sc = new Scanner(System.in);
         int pos = sc.nextInt();
-        Item pizza = items[pos-1];
+        Item pizza = pizzas[pos-1];
 
         ((Pizza) pizza).editMenu();
 
@@ -152,6 +114,60 @@ public class PizzaStore {
     }
 
 
+    // SIDE DISH FUNCTIONS
+
+
+    // add new sidedish to order
+    public void addSideDish(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n\t\tEnter 1 to CONTINUE and 0 to CANCEL\n");
+        int confirm = sc.nextInt();
+        if(confirm ==1){
+            SideDish newSideDish = new SideDish();
+            newSideDish.inputProperties();
+            if(newSideDish.getLength() == 0){
+                return;
+            }
+            pushToSideDishes(newSideDish);
+        }
+        else{
+            System.out.println("\n\t\tX   Adding Side-Dish Cancelled   X\n");
+        }
+    }
+
+    // push sidedish in sidedishes array
+    public void pushToSideDishes(SideDish newSideDish){
+        sideDishes.add(newSideDish);
+    }
+
+    // print all sidedishes in order
+    public void printSideDishes(){
+        if(sideDishes.size()>0){
+            System.out.println("\t\t\t Your SideDishes\n");
+            int sernum =1;
+            System.out.println("\tS.no\tSideDish\tQuantity");
+            for(Item i : sideDishes){
+                System.out.print("\t"+(sernum)+"\t");
+			    i.printDetails();
+                sernum++;
+            }
+        } else {
+            System.out.println("No SideDishes in your Order");
+
+        }
+    }
+
+
+    // print order
+    public void printOrder(){
+        System.out.println("\t\t\t Your Order\n");
+        
+        printPizzas();
+        printSideDishes();
+
+    }
+
+
     public int confirm(){
         System.out.println("##############################################################################");
         System.out.println("#                                                                            #");
@@ -172,6 +188,7 @@ public class PizzaStore {
     }
 
 
+    // adding a note for order
     public void addNote(){
         System.out.println("\n\t\tType a note if you want to add :");
         Scanner sc =  new Scanner(System.in);
@@ -179,6 +196,7 @@ public class PizzaStore {
         orderNote = note;
     }
 
+    // edit sidedish in order
     public void editSideDish(){
         printSideDishes();
 
@@ -209,6 +227,8 @@ public class PizzaStore {
     }
 
 
+
+    // driving function for ordering in pistore
     public void processInput() {
 		Scanner sc = new Scanner(System.in);
 		mainMenu();
