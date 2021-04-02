@@ -51,7 +51,7 @@ public class SideDish extends Item{
     System.out.println("Please enter the quantity for this SideDish");
     int qval = sc.nextInt();
     if(qval == 0){
-      deleteProperty();
+      deleteAll();
       return;
     }
     addProperty(ItemPropertyType.SDQUANTITY, qval);

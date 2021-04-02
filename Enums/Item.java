@@ -71,7 +71,7 @@ public abstract class Item {
     this.properties[len] = new ItemProperty(property, val);
   }
 
-  public void deleteProperty(){
+  public void deleteAll(){
     ItemProperty[] temp = new ItemProperty[0];
     properties = temp;
   }
