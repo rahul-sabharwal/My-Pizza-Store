@@ -7,8 +7,11 @@ import Enums.ItemPropertyType;
 import Enums.ItemType;
 
 public class SideDish extends Item{
+	private Scanner sc;
+	
   public SideDish(){
     super(ItemType.SIDEDISH);
+    sc = new Scanner(System.in);
   }
 
   public void sideDishMenu(){
@@ -29,7 +32,7 @@ public class SideDish extends Item{
     System.out.print("Please Type the SideDish you want to add : ");
   }
 
-  public void editMenu() {
+  public void printEditMenu() {
     System.out.println("\n");
     System.out.println("        ########################################");
     System.out.println("        #                                      #");
@@ -43,9 +46,27 @@ public class SideDish extends Item{
 
 }
   
+  public void updateItem(){
+      System.out.println("\n\n\t\tEnter 1 for YES and 0 for NO\t\t\n\n");
+      System.out.print("Do you want to update SideDish : ");
+      int decision = sc.nextInt();
+      if(decision == 1){
+          System.out.println("\nEnter New SideDish : ");
+          String val = sc.next();
+          updateProperty(ItemPropertyType.SDNAME, val);
+      }
+      System.out.print("Do you want to update Quantity :");
+      decision = sc.nextInt();
+      if(decision == 1){
+          System.out.println("\nEnter New Crust : ");
+          int qval = sc.nextInt();
+          updateProperty(ItemPropertyType.SDQUANTITY, qval);
+      }
+  }
+  
   public void inputProperties(){
     sideDishMenu();
-    Scanner sc = new Scanner(System.in);
+    sc = new Scanner(System.in);
     String val = sc.nextLine();
     addProperty(ItemPropertyType.SDNAME, val);
     System.out.println("Please enter the quantity for this SideDish");
