@@ -48,20 +48,24 @@ public class PizzaStore extends Store {
         System.out.println("\t\t\t Your Order\n");
         printPizzas();
         printSideDishes();
-        System.out.println("\t\t\t Note: +(orderNote)+ \n");
+        if(orderNote.equals(""))
+            System.out.println("\n\t\t You Can also add a note \n");
+        else
+        	System.out.println("\n\t\t Note:  "+ orderNote + "\n");
+
     }
 
     // print all pizzas in order
     public void printPizzas() {
         if (nPizzas > 0) {
-            System.out.println("\t\t\t Your Pizzas\n");
-            System.out.println("\tS.no\tSize\t\tCrust\t\tToppings");
+            System.out.println("\t\t Your Pizzas\n");
+            System.out.println("\tS.no\tCrust\t\t Size\t\tToppings");
             for (int i = 0; i < nPizzas; i++) {
                 System.out.print("\t" + (i + 1) + "\t");
                 items.get(i).printDetails();
             }
         } else {
-            System.out.println("\t\t\t No Pizzas in your Order \n");
+            System.out.println("\n\t\t No Pizzas in your Order \n");
         }
     }
 
@@ -104,14 +108,14 @@ public class PizzaStore extends Store {
     // print all sidedishes in order
     public void printSideDishes() {
         if (nSideDishes > 0) {
-            System.out.println("\t\t\t Your SideDishes\n");
+            System.out.println("\n\t\t Your SideDishes\n");
             System.out.println("\tS.no\tSideDish\tQuantity");
-            for (int i = nPizzas+1; i < nPizzas + nSideDishes; i++) {
-                System.out.print("\t" + (i) + "\t");
+            for (int i = nPizzas; i < nPizzas + nSideDishes; i++) {
+                System.out.print("\t" + (i+1) + "\t");
                 items.get(i).printDetails();
             }
         } else {
-            System.out.println("\t\t\t No SideDishes in your Order \n");
+            System.out.println("\n\t\t No SideDishes in your Order \n");
 
         }
     }
@@ -130,7 +134,7 @@ public class PizzaStore extends Store {
         if (orderNote.equals("")) {
             System.out.println("\n\t\tYou can also add a note for your order\n");
         } else
-            System.out.println("\n\t\tNote : " + (orderNote) + "\n");
+            System.out.println("\n\t\tNote : " + orderNote + "\n");
 
         System.out.println("\n\t\tEnter 1 to CONFIRM and 0 to ADD MORE\n");
         int op = sc.nextInt();

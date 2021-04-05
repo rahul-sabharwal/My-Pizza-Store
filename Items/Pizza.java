@@ -5,7 +5,9 @@ import Enums.*;
 
 public class Pizza extends Item{
 	private Scanner sc;
-	
+	private String[] pizzaSizes = {"Small", "Medium","Large"};
+	private String[] pizzaCrusts = {"Thin", "Regular"};
+
 
   public Pizza(){
     super(ItemType.PIZZA);
@@ -86,22 +88,22 @@ public class Pizza extends Item{
       int decision = sc.nextInt();
       if(decision == 1){
           System.out.println("\nEnter New Size : ");
-          String val = sc.next();
-          updateProperty(ItemPropertyType.SIZE, val);
+          int val = sc.nextInt();
+          updateProperty(ItemPropertyType.SIZE, pizzaSizes[val-1]);
       }
       System.out.print("Do you want to update Crust :");
       decision = sc.nextInt();
       if(decision == 1){
           System.out.println("\nEnter New Crust : ");
-          String val = sc.next();
-          updateProperty(ItemPropertyType.CRUST, val);
+          int val = sc.nextInt();
+          updateProperty(ItemPropertyType.CRUST, pizzaCrusts[val-1]);
       }
       System.out.print("Do you want to update Toppings :");
       decision = sc.nextInt();
        if(decision == 1){
           System.out.println("\nEnter New Toppings : ");
-          String val = sc.next();
-          updateProperty(ItemPropertyType.TOPPINGS, val);
+          String tval = sc.next();
+          updateProperty(ItemPropertyType.TOPPINGS, tval);
       }
   };
    
@@ -109,14 +111,14 @@ public class Pizza extends Item{
   public void inputProperties(){
     pizzaCrustMenu();
     sc = new Scanner(System.in);
-    String val = sc.nextLine();
-    addProperty(ItemPropertyType.CRUST, val);
+    int val = sc.nextInt();
+    addProperty(ItemPropertyType.CRUST, pizzaCrusts[val-1]);
     pizzaSizeMenu();
-    val = sc.nextLine();
-    addProperty(ItemPropertyType.SIZE, val);
+    val = sc.nextInt();
+    addProperty(ItemPropertyType.SIZE, pizzaSizes[val-1]);
     pizzaToppingsMenu();
-    val = sc.nextLine();
-    addProperty(ItemPropertyType.TOPPINGS, val);
+    String tval = sc.next();
+    addProperty(ItemPropertyType.TOPPINGS, tval);
   };
  
 
