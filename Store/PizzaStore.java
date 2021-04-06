@@ -7,7 +7,6 @@ import Items.*;
 public class PizzaStore extends Store {
     private Scanner sc;
     private ArrayList < Item > items = new ArrayList < > ();
-    private int nPizzas = 0, nSideDishes = 0;
     private String orderNote = "";
 
     public PizzaStore() {
@@ -46,27 +45,33 @@ public class PizzaStore extends Store {
 
     public void printItems() {
         System.out.println("\t\t\t Your Order\n");
-        printPizzas();
-        printSideDishes();
-        if(orderNote.equals(""))
-            System.out.println("\n\t\t You Can also add a note \n");
-        else
-        	System.out.println("\n\t\t Note:  "+ orderNote + "\n");
-
+        printItems(ItemType.PIZZA);
+        printItems(ItemType.SIDEDISH);
+        if(!orderNote.isBlank())
+        System.out.println("\n\t\t Note: "+ orderNote +"\n");
     }
 
     // print all pizzas in order
-    public void printPizzas() {
-        if (nPizzas > 0) {
-            System.out.println("\t\t Your Pizzas\n");
-            System.out.println("\tS.no\tCrust\t\t Size\t\tToppings");
-            for (int i = 0; i < nPizzas; i++) {
-                System.out.print("\t" + (i + 1) + "\t");
-                items.get(i).printDetails();
-            }
-        } else {
-            System.out.println("\n\t\t No Pizzas in your Order \n");
-        }
+    public void printItems(ItemType type) {
+    	boolean containsItem = false;
+    	int serialNumber = 1;
+    	System.out.println("\n\t\t\t Your "+ type.name() +"\n");
+    	if(type.equals(ItemType.PIZZA)) {
+    		System.out.println("\tS.no\tItem ID\t\tCrust\t\t Size\t\t Toppings");   
+    	} else if(type.equals(ItemType.SIDEDISH)) {
+            System.out.println("\tS.no\tItem ID\t\tSideDish\t\tQuantity");
+    	}
+		for(int i=0;i<items.size();i++) {
+			if(items.get(i).getType().equals(type.toString())) {
+			containsItem = true;
+    		System.out.print("\t" + serialNumber + "\t" + items.get(i).getId()+"\t\t");
+    		serialNumber++;
+    		items.get(i).printDetails();
+			}
+		}
+		if(containsItem==false) {
+			System.out.println("\n\t\tNo "+type.name()+" present in your Order.");
+		}
     }
 
     public void addItem() {
@@ -74,51 +79,35 @@ public class PizzaStore extends Store {
         item.printItemsMenu();
         System.out.println("What Item you want to add ?");
         int option = sc.nextInt();
-        if (option == 1) {
-            item.inputProperties();
-            items.add(nPizzas, item);
-            nPizzas++;
-        } else if (option == 2) {
+        if (option == 2) {
             item = new SideDish();
-            item.inputProperties();
-            items.add(nPizzas + nSideDishes, item);
-            nSideDishes++;
         }
+        item.inputProperties();
+        item.setId(items.size()+1);
+        items.add(item);
     }
 
     public void editItem() {
         printItems();
-        System.out.println("\nEnter Item you want to edit : ");
+        System.out.println("\nEnter Item id that you want to edit : ");
         sc = new Scanner(System.in);
-        int pos = sc.nextInt();
-        Item item = items.get(pos - 1);
+        int id = sc.nextInt();
+        int pos =0;
+        
+        for(int i=0;i<items.size();i++) {
+        	if(items.get(i).getId() == id) {
+        		pos = i;
+        	}
+        }
+        Item item = items.get(pos);
         if (item.getType().equals(ItemType.PIZZA.toString())) {
-            item = (Pizza) items.get(pos - 1);
-            item.printEditMenu();
-            printPizzas();
-            item.updateItem();
+            item = (Pizza) items.get(pos);
         } else {
-            item = (SideDish) items.get(pos - 1);
-            item.printEditMenu();
-            printPizzas();
-            item.updateItem();
+            item = (SideDish) items.get(pos);
         }
+        item.updateItem();
     }
 
-    // print all sidedishes in order
-    public void printSideDishes() {
-        if (nSideDishes > 0) {
-            System.out.println("\n\t\t Your SideDishes\n");
-            System.out.println("\tS.no\tSideDish\tQuantity");
-            for (int i = nPizzas; i < nPizzas + nSideDishes; i++) {
-                System.out.print("\t" + (i+1) + "\t");
-                items.get(i).printDetails();
-            }
-        } else {
-            System.out.println("\n\t\t No SideDishes in your Order \n");
-
-        }
-    }
 
     public boolean confirm() {
         System.out.println("##############################################################################");
@@ -150,12 +139,11 @@ public class PizzaStore extends Store {
     }
 
     // driving function for ordering in pistore
-    public void processInput() {
+    public void initiateOrder() {
         sc = new Scanner(System.in);
         printStoreMenu();
         System.out.print("\n");
         while (true) {
-
             int opt = sc.nextInt();
 
             if (opt == 1) {

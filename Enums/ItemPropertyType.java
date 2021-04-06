@@ -1,5 +1,5 @@
 package Enums;
 
 public enum ItemPropertyType {
-  CRUST, SIZE, TOPPINGS, SDNAME, SDQUANTITY
+  CRUST, SIZE, TOPPINGS, SDNAME, SDQUANTITY, ITEMID
 }

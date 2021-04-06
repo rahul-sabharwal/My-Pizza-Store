@@ -15,7 +15,7 @@ public class Pizza extends Item{
   }
 
   // Pizza size menu
-  private  void pizzaSizeMenu() {
+  private  void printSizeMenu() {
     System.out.println("\n");
     System.out.println("        ########################################");
     System.out.println("        #                                      #");
@@ -32,7 +32,7 @@ public class Pizza extends Item{
   }
 
   // Pizza Crust Menu
-  private  void pizzaCrustMenu() {
+  private  void printCrustMenu() {
     System.out.println("\n");
     System.out.println("        ########################################");
     System.out.println("        #                                      #");
@@ -48,7 +48,7 @@ public class Pizza extends Item{
   }
 
     // Pizza size menu
-    private  void pizzaToppingsMenu() {
+    private  void printToppingsMenu() {
       System.out.println("\n");
       System.out.println("        ########################################");
       System.out.println("        #                                      #");
@@ -63,60 +63,46 @@ public class Pizza extends Item{
       System.out.println("\n");
       System.out.print("Please Type the Toppings you want to add : ");
     }
-  
 
-    public void printEditMenu() {
-      System.out.println("\n");
-      System.out.println("        ########################################");
-      System.out.println("        #                                      #");
-      System.out.println("        #         Choose Your to edit :        #");
-      System.out.println("        #                                      #");
-      System.out.println("        #           1. Size                    #");
-      System.out.println("        #           2. Crust                   #");
-      System.out.println("        #           3. Toppings                #");
-      System.out.println("        #           4. Cancel                  #");
-      System.out.println("        #                                      #");
-      System.out.println("        ########################################");
-      System.out.println("\n");
-
-  }
-    
 
   public void updateItem(){
       System.out.println("\n\n\t\tEnter 1 for YES and 0 for NO\t\t\n\n");
       System.out.print("Do you want to update Size :");
       int decision = sc.nextInt();
       if(decision == 1){
-          System.out.println("\nEnter New Size : ");
+    	  printSizeMenu();
+          System.out.println("\n\nEnter New Size : ");
           int val = sc.nextInt();
           updateProperty(ItemPropertyType.SIZE, pizzaSizes[val-1]);
       }
       System.out.print("Do you want to update Crust :");
       decision = sc.nextInt();
       if(decision == 1){
-          System.out.println("\nEnter New Crust : ");
+    	  printCrustMenu();
+          System.out.println("\n\nEnter New Crust : ");
           int val = sc.nextInt();
           updateProperty(ItemPropertyType.CRUST, pizzaCrusts[val-1]);
       }
       System.out.print("Do you want to update Toppings :");
       decision = sc.nextInt();
        if(decision == 1){
-          System.out.println("\nEnter New Toppings : ");
+    	  printToppingsMenu();
+          System.out.println("\n\nEnter New Toppings : ");
           String tval = sc.next();
           updateProperty(ItemPropertyType.TOPPINGS, tval);
       }
   };
-   
+ 
 
   public void inputProperties(){
-    pizzaCrustMenu();
+    printCrustMenu();
     sc = new Scanner(System.in);
     int val = sc.nextInt();
     addProperty(ItemPropertyType.CRUST, pizzaCrusts[val-1]);
-    pizzaSizeMenu();
+    printSizeMenu();
     val = sc.nextInt();
     addProperty(ItemPropertyType.SIZE, pizzaSizes[val-1]);
-    pizzaToppingsMenu();
+    printToppingsMenu();
     String tval = sc.next();
     addProperty(ItemPropertyType.TOPPINGS, tval);
   };

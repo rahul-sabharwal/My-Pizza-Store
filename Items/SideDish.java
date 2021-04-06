@@ -15,7 +15,7 @@ public class SideDish extends Item{
     sc = new Scanner(System.in);
   }
 
-  public void sideDishMenu(){
+  public void printSideDishMenu(){
     System.out.println("\n");
     System.out.println("        ########################################");
     System.out.println("        #                                      #");
@@ -33,25 +33,12 @@ public class SideDish extends Item{
     System.out.print("Please Type the SideDish you want to add : ");
   }
 
-  public void printEditMenu() {
-    System.out.println("\n");
-    System.out.println("        ########################################");
-    System.out.println("        #                                      #");
-    System.out.println("        #         Choose Your to edit :        #");
-    System.out.println("        #                                      #");
-    System.out.println("        #           1. Side Dish               #");
-    System.out.println("        #           2. Quantity                #");
-    System.out.println("        #                                      #");
-    System.out.println("        ########################################");
-    System.out.println("\n");
-
-}
-  
   public void updateItem(){
       System.out.println("\n\n\t\tEnter 1 for YES and 0 for NO\t\t\n\n");
       System.out.print("Do you want to update SideDish : ");
       int decision = sc.nextInt();
       if(decision == 1){
+    	  printSideDishMenu();
           System.out.println("\nEnter New SideDish : ");
           int val = sc.nextInt();
           updateProperty(ItemPropertyType.SDNAME, sideDishesMenu[val-1]);
@@ -59,14 +46,15 @@ public class SideDish extends Item{
       System.out.print("Do you want to update Quantity :");
       decision = sc.nextInt();
       if(decision == 1){
-          System.out.println("\nEnter New Crust : ");
+          System.out.println("\nEnter New Quantity : ");
           int qval = sc.nextInt();
           updateProperty(ItemPropertyType.SDQUANTITY, qval);
       }
   }
   
+ 
   public void inputProperties(){
-    sideDishMenu();
+	printSideDishMenu();
     sc = new Scanner(System.in);
     int val = sc.nextInt();
     addProperty(ItemPropertyType.SDNAME, sideDishesMenu[val-1]);

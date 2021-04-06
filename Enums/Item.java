@@ -1,12 +1,21 @@
 package Enums;
 
 public abstract class Item {
-  private ItemType itemType;
+	private ItemType itemType;
+	private int id;
 	private ItemProperty[] properties = new ItemProperty[0];
 
   // Constructor
   protected Item(ItemType type){
     this.itemType = type;
+  }
+  
+  public void setId(int val) {
+	  this.id = val;
+  }
+  
+  public int getId() {
+	  return this.id;
   }
   
   public void printItemsMenu() {
@@ -24,7 +33,6 @@ public abstract class Item {
   }
 
   public abstract void inputProperties();
-  public abstract void printEditMenu();
   public abstract void updateItem();
 
 
@@ -39,7 +47,7 @@ public abstract class Item {
 
   public void printDetails() {
 		for (ItemProperty prop : this.properties) {
-      if (prop.getName() == ItemPropertyType.SDQUANTITY) {
+      if (prop.getName() == ItemPropertyType.SDQUANTITY || prop.getName() == ItemPropertyType.ITEMID) {
         System.out.print(prop.getIntValue()+"\t\t");
       }else{
         System.out.print(prop.getValue()+"\t\t");
@@ -76,7 +84,6 @@ public abstract class Item {
     }
     this.properties[len] = new ItemProperty(property, val);
   }
-
 
   public void addProperty(ItemPropertyType property , int val){
     ItemProperty[] temp = this.properties;
