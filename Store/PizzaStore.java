@@ -1,6 +1,11 @@
 package Store;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
+import java.util.List;
+
 import Enums.*;
 import Items.*;
 
@@ -12,7 +17,7 @@ public class PizzaStore extends Store {
     public PizzaStore() {
         sc = new Scanner(System.in);
     }
-
+ 
     @SuppressWarnings("deprecation")
     @Override
     protected void finalize() throws Throwable {
@@ -50,26 +55,29 @@ public class PizzaStore extends Store {
         if(!orderNote.isBlank())
         System.out.println("\n\t\t Note: "+ orderNote +"\n");
     }
+    
+    public void printItemRow(Item i){
+    	
+    }
 
     // print all pizzas in order
     public void printItems(ItemType type) {
-    	boolean containsItem = false;
-    	int serialNumber = 1;
+    	AtomicBoolean containsItem = new AtomicBoolean(false);
+    	AtomicInteger serialNumber = new AtomicInteger(1);
     	System.out.println("\n\t\t\t Your "+ type.name() +"\n");
     	if(type.equals(ItemType.PIZZA)) {
     		System.out.println("\tS.no\tItem ID\t\tCrust\t\t Size\t\t Toppings");   
     	} else if(type.equals(ItemType.SIDEDISH)) {
             System.out.println("\tS.no\tItem ID\t\tSideDish\t\tQuantity");
     	}
-		for(int i=0;i<items.size();i++) {
-			if(items.get(i).getType().equals(type.toString())) {
-			containsItem = true;
-    		System.out.print("\t" + serialNumber + "\t" + items.get(i).getId()+"\t\t");
-    		serialNumber++;
-    		items.get(i).printDetails();
-			}
-		}
-		if(containsItem==false) {
+    	
+    	items.stream().filter(i->i.getType().equals(type.toString())).forEach(item -> {
+    		System.out.print("\t" +  serialNumber + "\t" + item.getId()+"\t\t");
+    		item.printDetails();
+    		serialNumber.incrementAndGet();
+    	});
+		
+		if(containsItem.get()) {
 			System.out.println("\n\t\tNo "+type.name()+" present in your Order.");
 		}
     }
