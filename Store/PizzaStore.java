@@ -1,25 +1,21 @@
 package Store;
+import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import Enums.Item;
-import Enums.ItemType;
-import Enums.Store;
-import Items.Pizza;
-import Items.SideDish;
+
+import Enums.*;
+import Items.*;
 
 public class PizzaStore extends Store {
-	private ArrayList<Item> initItem = new ArrayList<Item>();
-	private Scanner sc;    
-    private HashMap<ItemType, ArrayList<Item>> itemsMap = new HashMap<>();
+    private Scanner sc;
+    private ArrayList < Item > items = new ArrayList < > ();
+    private HashMap<String, ArrayList<Item>> itemsMap = new HashMap<String, ArrayList<Item>>();
     private String orderNote = "";
-    private int itemsId=1;
     public PizzaStore() {
-    	itemsMap.put(ItemType.PIZZA, initItem);
-    	itemsMap.put(ItemType.SIDEDISH, initItem);
+        itemsMap.put("PIZZA", new ArrayList <Item> ());
+        itemsMap.put("SIDEDISH",  new ArrayList <Item>());
         sc = new Scanner(System.in);
     }
  
@@ -53,103 +49,74 @@ public class PizzaStore extends Store {
         System.out.println("\n");
     }
 
-    private void printItems() {
-        System.out.println("\t\t\t Your Order\n");
-        printItems(ItemType.PIZZA);
-        printItems(ItemType.SIDEDISH);
-        if(!orderNote.isBlank())
-        System.out.println("\n\t\t Note: "+ orderNote +"\n");
+    public void printItems() {
+        ArrayList<Item> pizzas = itemsMap.get("PIZZA");
+        ArrayList<Item> sideDishes = itemsMap.get("SIDEDISH");
+    	System.out.println("\n\t\t\t Your Order\n");
+    	System.out.println("\n\t\t\t Your Pizzas\n");
+        printItems(pizzas, "PIZZA");
+    	System.out.println("\n\t\t\t Your SideDishes\n");
+        printItems(sideDishes, "SIDEDISH");
     }
 
     // print all pizzas in order
-    private void printItems(ItemType type) {
-    	AtomicBoolean containsItem = new AtomicBoolean(false);
-    	AtomicInteger serialNumber = new AtomicInteger(1);
-    	ArrayList<Item> items = itemsMap.get(type);
-    	System.out.println("\n\t\t\t Your "+ type.name() +"\n");
-    	if(type.equals(ItemType.PIZZA)) {
-    		System.out.println("\tS.no\tItem ID\t\tCrust\t\t Size\t\t Toppings");   
-    	} else if(type.equals(ItemType.SIDEDISH)) {
-            System.out.println("\tS.no\tItem ID\t\tSideDish\t\tQuantity");
+    public void printItems(ArrayList<Item> myItems, String itemName) {
+    	if(myItems.isEmpty()) {
+    		System.out.println("\n\t\t\tNo "+itemName+" in your order");
+    		return;
     	}
-    	items.stream().filter(i->i.getType().equals(type.toString())).forEach(item -> {
-    		System.out.print("\t" +  serialNumber + "\t" + item.getId()+"\t\t");
-    		item.printDetails();
+    	if(itemName=="PIZZA")
+    		System.out.println("\tS.no\tItem ID\t\tCrust\t\t Size\t\t Toppings");   
+    	else
+            System.out.println("\tS.no\tItem ID\t\tSideDish\t\tQuantity");
+    	
+    	AtomicInteger serialNumber = new AtomicInteger(1);
+    	myItems.forEach(i -> {
+    		System.out.print("\t" +  serialNumber + "\t" + i.getId()+"\t\t");
+    		i.printDetails();
     		serialNumber.incrementAndGet();
     	});
-		
-		if(containsItem.get()) {
-			System.out.println("\n\t\tNo "+type.name()+" present in your Order.");
-		}
     }
 
-    private void addItem() {
-    	Item item = new Pizza();
+    public void addItem() {
+        Item item = new Pizza();
         item.printItemsMenu();
         System.out.println("What Item you want to add ?");
         int option = sc.nextInt();
-        if (option == 1) {
-            addItem(ItemType.PIZZA);
-        } else if(option ==2) {
-            addItem(ItemType.SIDEDISH);
-        } else {
-            System.out.println("\n\t\tX    INVALID INPUT PLEASE TRY AGAIN    X\n");
+        if (option == 2) {
+            item = new SideDish();
         }
-    }
-    
-    private void addItem(ItemType type) {
-    	Item item = new Pizza();
-    	if(type.equals(ItemType.SIDEDISH)) {
-        	item = new SideDish();
-    	}
-    	item.inputProperties();
-        ArrayList<Item> items = itemsMap.get(type);
-        item.setId(itemsId);
-        itemsId++;
+        item.inputProperties();
+        item.setId(items.size()+1);
+        ArrayList<Item> itemList = itemsMap.get(item.getType());
+        itemList.add(item);
+        itemsMap.put(item.getType().toString(), itemList);
         items.add(item);
-        itemsMap.put(type, items);
     }
-    
 
-    private void editItem() {
+    public void editItem() {
         printItems();
-        Item item = new Pizza();
-        item.printItemsMenu();
-        System.out.println("\nEnter Item that you want to edit : ");
-        int option = sc.nextInt();
-        if (option == 1) {
-            editItem(ItemType.PIZZA);
-        } else if(option ==2) {
-            editItem(ItemType.SIDEDISH);
-        } else {
-            System.out.println("\n\t\tX    INVALID INPUT PLEASE TRY AGAIN    X\n");
-        }
-    }
-    
-    private void editItem(ItemType type) {
-    	Item item = new Pizza();
-    	if(type.equals(ItemType.SIDEDISH)) {
-        	item = new SideDish();
-    	}
-        System.out.println("\nEnter Item that you want to edit : ");
+        System.out.println("\nEnter Item id that you want to edit : ");
+        sc = new Scanner(System.in);
         int id = sc.nextInt();
         int pos =0;
-    	ArrayList<Item> items = itemsMap.get(type);
-    	for(int i=0;i<items.size();i++) {
-    		if(items.get(i).getId() == id) {
-    			pos = i;
-    			break;
-    		}if(i==items.size()-1 && items.get(i).getId() == id) {
-                System.out.println("\n\t\tX    No Item present with this id    X\n");
-    		}
-    	}
-    	item = items.get(pos);
-    	item.updateItem();
-    	itemsMap.put(type, items);
+        
+        for(int i=0;i<items.size();i++) {
+        	if(items.get(i).getId() == id) {
+        		pos = i;
+        	}
+        }
+        Item item = items.get(pos);
+        if (item.getType().equals(ItemType.PIZZA.toString())) {
+            item = (Pizza) items.get(pos);
+        } else {
+            item = (SideDish) items.get(pos);
+        }
+        item.updateItem();
     }
 
 
-    private boolean confirm() {
+    public boolean confirm() {
         System.out.println("##############################################################################");
         System.out.println("#                                                                            #");
         System.out.println("#                               Final Order                                  #");
@@ -171,7 +138,7 @@ public class PizzaStore extends Store {
     }
 
     // adding a note for order
-    private void addNote() {
+    public void addNote() {
         System.out.println("\n\t\tType a note if you want to add :");
         sc = new Scanner(System.in);
         String note = sc.nextLine();
